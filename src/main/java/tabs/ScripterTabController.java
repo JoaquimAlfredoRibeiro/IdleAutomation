@@ -8,11 +8,4 @@ public class ScripterTabController {
 
     private final static Logger LOG = Logger.getLogger(ScripterTabController.class);
 
-    @FXML
-    private Button endPoint;
-
-    @FXML
-    private void onEndPoint() {
-        System.out.println("Scripter End Point");
-    }
 }

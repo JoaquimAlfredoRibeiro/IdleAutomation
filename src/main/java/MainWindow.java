@@ -12,8 +12,7 @@ public class MainWindow extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
         primaryStage.setTitle("Idle Automation");
-        primaryStage.setScene(new Scene(root, 500, 500));
-
+        primaryStage.setScene(new Scene(root, 450, 420));
         LOG.debug("Application initiated.");
         primaryStage.show();
     }

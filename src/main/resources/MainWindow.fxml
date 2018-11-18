@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
 <?import com.jfoenix.controls.JFXTabPane?>
-<JFXTabPane fx:controller="MainController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE"
-            xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<?import javafx.scene.control.Tab?>
+
+<JFXTabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="450.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainController">
     <tabs>
         <Tab text="Clicker">
             <content>
-                <fx:include fx:id="ClickerTab" source="ClickerTab.fxml"/>
+                <fx:include fx:id="ClickerTab" source="ClickerTab.fxml" />
             </content>
         </Tab>
         <Tab text="Scripter">
             <content>
-                <fx:include fx:id="ScripterTab" source="ScripterTab.fxml"/>
+                <fx:include fx:id="ScripterTab" source="ScripterTab.fxml" />
             </content>
         </Tab>
     </tabs>
