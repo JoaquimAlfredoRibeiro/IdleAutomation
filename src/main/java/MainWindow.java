@@ -10,10 +10,10 @@ public class MainWindow extends Application {
     private final static Logger LOG = Logger.getLogger(MainWindow.class);
 
     public void start(Stage primaryStage) throws Exception {
+        LOG.debug("Application initiated.");
         Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
         primaryStage.setTitle("Idle Automation");
         primaryStage.setScene(new Scene(root, 450, 420));
-        LOG.debug("Application initiated.");
         primaryStage.show();
     }
 

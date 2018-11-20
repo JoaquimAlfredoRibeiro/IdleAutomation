@@ -3,6 +3,8 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXRadioButton?>
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Label?>
@@ -13,7 +15,8 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="380.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tabs.ClickerTabController">
+<AnchorPane prefHeight="380.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8.0.121"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="tabs.ClickerTabController">
    <children>
       <Rectangle id="clickIntervalRectangle" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="62.0" layoutX="9.0" layoutY="12.0" opacity="0.45" stroke="#148d58" strokeType="OUTSIDE" width="430.0" />
       <FlowPane id="clickIntervalFlowPane" fx:id="clickIntervalFlowPane" hgap="20.0" layoutX="28.0" layoutY="29.0">
@@ -67,7 +70,18 @@
          </font>
       </Label>
       <Label layoutX="24.0" layoutY="117.0" text="Mouse Button" />
-      <JFXComboBox focusColor="#00bcd5" layoutX="119.0" layoutY="113.0" prefHeight="25.0" prefWidth="75.0" />
+       <JFXComboBox focusColor="#00bcd5" layoutX="111.0" layoutY="113.0" prefHeight="25.0" prefWidth="85.0">
+           <items>
+               <FXCollections fx:factory="observableArrayList">
+                   <String fx:value="Left"/>
+                   <String fx:value="Middle"/>
+                   <String fx:value="Right"/>
+               </FXCollections>
+           </items>
+           <value>
+               <String fx:value="Left"/>
+           </value>
+       </JFXComboBox>
       <Rectangle id="clickRepeatRectangle" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="78.0" layoutX="233.0" layoutY="86.0" opacity="0.45" stroke="#148d58" strokeType="OUTSIDE" width="207.0" />
       <Label layoutX="252.0" layoutY="78.0" style="-fx-background-color: F4F4F4;" text="Click Repeat" textFill="#148d58">
          <font>
@@ -91,7 +105,9 @@
             <ToggleGroup fx:id="clickPositionToggleGroup" />
          </toggleGroup></JFXRadioButton>
       <JFXRadioButton id="pickLocationRadioButton" fx:id="pickLocationRadioButton" layoutX="158.0" layoutY="201.0" toggleGroup="$clickPositionToggleGroup" />
-      <JFXButton id="pickLocationButton" buttonType="RAISED" layoutX="185.0" layoutY="191.0" prefHeight="36.0" prefWidth="93.0" ripplerFill="#158c56" style="-fx-background-color: F4F4F4;" text="Pick Location" />
+       <JFXButton id="pickLocationButton" fx:id="pickLocationButton" buttonType="RAISED" layoutX="185.0" layoutY="191.0"
+                  onMouseReleased="#onPickLocationMouseRelease" prefHeight="36.0" prefWidth="93.0" ripplerFill="#158c56"
+                  style="-fx-background-color: F4F4F4;" text="Pick Location"/>
       <Label layoutX="290.0" layoutY="199.0" style="-fx-background-color: F4F4F4;" text="X" textFill="#148d58">
          <font>
             <Font name="System Bold" size="14.0" />
@@ -104,7 +120,9 @@
          </font>
       </Label>
       <TextField id="yTextField" fx:id="yTextField" layoutX="377.0" layoutY="197.0" prefHeight="25.0" prefWidth="42.0" />
-      <JFXButton id="startButton" fx:id="startButton" buttonType="RAISED" layoutX="8.0" layoutY="250.0" prefHeight="54.0" prefWidth="209.0" ripplerFill="WHITE" style="-fx-background-color: #158c56;" text="Start" textFill="WHITE">
+       <JFXButton id="startButton" fx:id="startButton" buttonType="RAISED" layoutX="8.0" layoutY="250.0"
+                  onAction="#testmethod" prefHeight="54.0" prefWidth="209.0" ripplerFill="WHITE"
+                  style="-fx-background-color: #158c56;" text="Start" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -114,7 +132,9 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </JFXButton>
-      <JFXButton id="setHotkeyButton" fx:id="setHotkeyButton" buttonType="RAISED" layoutX="8.0" layoutY="315.0" prefHeight="54.0" prefWidth="209.0" ripplerFill="WHITE" style="-fx-background-color: #158c56;" text="Set Hotkey" textFill="WHITE">
+       <JFXButton id="setHotkeyButton" fx:id="setHotkeyButton" buttonType="RAISED" layoutX="8.0" layoutY="315.0"
+                  onKeyPressed="#onSetHotkeyKeyPressed" prefHeight="54.0" prefWidth="209.0" ripplerFill="WHITE"
+                  style="-fx-background-color: #158c56;" text="Set Hotkey" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
