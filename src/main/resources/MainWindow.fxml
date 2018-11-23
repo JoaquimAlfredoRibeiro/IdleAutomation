@@ -3,14 +3,16 @@
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import javafx.scene.control.Tab?>
 
-<JFXTabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="450.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainController">
+<JFXTabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="420.0" prefWidth="450.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.121"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.MainController">
     <tabs>
-        <Tab text="Clicker">
+        <Tab id="clickerTab" fx:id="clickerTab" text="Clicker">
             <content>
                 <fx:include fx:id="ClickerTab" source="ClickerTab.fxml" />
             </content>
         </Tab>
-        <Tab text="Scripter">
+        <Tab id="scripterTab" fx:id="scripterTab" text="Scripter">
             <content>
                 <fx:include fx:id="ScripterTab" source="ScripterTab.fxml" />
             </content>

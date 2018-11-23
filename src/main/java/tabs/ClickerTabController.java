@@ -1,16 +1,22 @@
 package tabs;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXRadioButton;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXRadioButton;
-import javafx.scene.control.TextField;
+import org.jnativehook.keyboard.NativeKeyEvent;
 
 import java.util.concurrent.TimeUnit;
 
@@ -63,6 +69,9 @@ public class ClickerTabController {
 
     @FXML
     private JFXButton helpButton;
+
+    @FXML
+    private JFXComboBox mouseButtonComboBox;
 
     private KeyCode startHotKey;
     private Long xScreen;
@@ -135,53 +144,78 @@ public class ClickerTabController {
     }
 
     @FXML
-    private void testmethod() {
+    public void onPlay(Event e) {
         //PLACEHOLDER
+        System.out.println(getClickIntervalMillis());
+        System.out.println(mouseButtonComboBox.getValue());
     }
 
     //Defines custom Click Position
     @FXML
     private void onPickLocationMouseRelease(MouseEvent event) {
 
-        xScreen = new Long(Math.round(event.getScreenX()));
-        yScreen = new Long(Math.round(event.getScreenY()));
+        xScreen = Math.round(event.getScreenX());
+        yScreen = Math.round(event.getScreenY());
 
         xTextField.setText(xScreen.toString());
         yTextField.setText(yScreen.toString());
     }
 
-    //defines the character limit for the various textfields
+    //Help Window
+    @FXML
+    private void onHelpButtonAction() {
+        final Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        VBox dialogVbox = new VBox(20);
+        dialogVbox.getChildren().add(new Text("Free Software developed by Joaquim Ribeiro.\n"));
+        dialogVbox.getChildren().add(new Text("To 'Pick Location', click the button, then release on desired location."));
+        dialogVbox.getChildren().add(new Text("If 'Repeat' value is left blank and it is selected, it will click indefinitely."));
+        Scene dialogScene = new Scene(dialogVbox, 400, 200);
+        dialog.setScene(dialogScene);
+        dialog.show();
+    }
+
+    //defines the character limit and numeric regex for the various textfields
     private void limitTextfields() {
 
         hoursTextField.setOnKeyTyped(a -> {
             int maxCharacters = 1;
-            if (hoursTextField.getText().length() > maxCharacters) a.consume();
+            if (hoursTextField.getText().length() > maxCharacters || !StringUtils.isNumeric(a.getCharacter()))
+                a.consume();
         });
 
         minutesTextField.setOnKeyTyped(a -> {
             int maxCharacters = 1;
-            if (minutesTextField.getText().length() > maxCharacters) a.consume();
+            if (minutesTextField.getText().length() > maxCharacters || !StringUtils.isNumeric(a.getCharacter()))
+                a.consume();
         });
 
         secondsTextField.setOnKeyTyped(a -> {
             int maxCharacters = 1;
-            if (secondsTextField.getText().length() > maxCharacters) a.consume();
+            if (secondsTextField.getText().length() > maxCharacters || !StringUtils.isNumeric(a.getCharacter()))
+                a.consume();
         });
 
         millisecondsTextField.setOnKeyTyped(a -> {
             int maxCharacters = 2;
-            if (millisecondsTextField.getText().length() > maxCharacters) a.consume();
+            if (millisecondsTextField.getText().length() > maxCharacters || !StringUtils.isNumeric(a.getCharacter()))
+                a.consume();
         });
 
         xTextField.setOnKeyTyped(a -> {
             int maxCharacters = 3;
-            if (xTextField.getText().length() > maxCharacters) a.consume();
+            if (xTextField.getText().length() > maxCharacters || !StringUtils.isNumeric(a.getCharacter()))
+                a.consume();
         });
 
         yTextField.setOnKeyTyped(a -> {
             int maxCharacters = 3;
-            if (yTextField.getText().length() > maxCharacters) a.consume();
+            if (yTextField.getText().length() > maxCharacters || !StringUtils.isNumeric(a.getCharacter()))
+                a.consume();
         });
     }
 
+    public static void keyPressed(String keyCode) {
+        LOG.debug("ClickerTab Key Pressed: " + keyCode);
+    }
 }

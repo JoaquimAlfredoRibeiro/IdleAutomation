@@ -70,16 +70,17 @@
          </font>
       </Label>
       <Label layoutX="24.0" layoutY="117.0" text="Mouse Button" />
-       <JFXComboBox focusColor="#00bcd5" layoutX="111.0" layoutY="113.0" prefHeight="25.0" prefWidth="85.0">
+      <JFXComboBox fx:id="mouseButtonComboBox" focusColor="#00bcd5" layoutX="111.0" layoutY="113.0" prefHeight="25.0"
+                   prefWidth="85.0">
            <items>
                <FXCollections fx:factory="observableArrayList">
-                   <String fx:value="Left"/>
-                   <String fx:value="Middle"/>
-                   <String fx:value="Right"/>
+                  <String fx:value="Left"/>
+                  <String fx:value="Middle"/>
+                  <String fx:value="Right"/>
                </FXCollections>
            </items>
            <value>
-               <String fx:value="Left"/>
+              <String fx:value="Left"/>
            </value>
        </JFXComboBox>
       <Rectangle id="clickRepeatRectangle" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="78.0" layoutX="233.0" layoutY="86.0" opacity="0.45" stroke="#148d58" strokeType="OUTSIDE" width="207.0" />
@@ -105,9 +106,9 @@
             <ToggleGroup fx:id="clickPositionToggleGroup" />
          </toggleGroup></JFXRadioButton>
       <JFXRadioButton id="pickLocationRadioButton" fx:id="pickLocationRadioButton" layoutX="158.0" layoutY="201.0" toggleGroup="$clickPositionToggleGroup" />
-       <JFXButton id="pickLocationButton" fx:id="pickLocationButton" buttonType="RAISED" layoutX="185.0" layoutY="191.0"
-                  onMouseReleased="#onPickLocationMouseRelease" prefHeight="36.0" prefWidth="93.0" ripplerFill="#158c56"
-                  style="-fx-background-color: F4F4F4;" text="Pick Location"/>
+      <JFXButton id="pickLocationButton" fx:id="pickLocationButton" buttonType="RAISED" layoutX="185.0" layoutY="191.0"
+                 onMouseReleased="#onPickLocationMouseRelease" prefHeight="36.0" prefWidth="93.0" ripplerFill="#158c56"
+                 style="-fx-background-color: F4F4F4;" text="Pick Location"/>
       <Label layoutX="290.0" layoutY="199.0" style="-fx-background-color: F4F4F4;" text="X" textFill="#148d58">
          <font>
             <Font name="System Bold" size="14.0" />
@@ -120,9 +121,9 @@
          </font>
       </Label>
       <TextField id="yTextField" fx:id="yTextField" layoutX="377.0" layoutY="197.0" prefHeight="25.0" prefWidth="42.0" />
-       <JFXButton id="startButton" fx:id="startButton" buttonType="RAISED" layoutX="8.0" layoutY="250.0"
-                  onAction="#testmethod" prefHeight="54.0" prefWidth="209.0" ripplerFill="WHITE"
-                  style="-fx-background-color: #158c56;" text="Start" textFill="WHITE">
+      <JFXButton id="startButton" fx:id="startButton" buttonType="RAISED" layoutX="8.0" layoutY="250.0"
+                 onAction="#onPlay" prefHeight="54.0" prefWidth="209.0" ripplerFill="WHITE"
+                 style="-fx-background-color: #158c56;" text="Start" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -132,14 +133,16 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </JFXButton>
-       <JFXButton id="setHotkeyButton" fx:id="setHotkeyButton" buttonType="RAISED" layoutX="8.0" layoutY="315.0"
-                  onKeyPressed="#onSetHotkeyKeyPressed" prefHeight="54.0" prefWidth="209.0" ripplerFill="WHITE"
-                  style="-fx-background-color: #158c56;" text="Set Hotkey" textFill="WHITE">
+      <JFXButton id="setHotkeyButton" fx:id="setHotkeyButton" buttonType="RAISED" layoutX="8.0" layoutY="315.0"
+                 onKeyPressed="#onSetHotkeyKeyPressed" prefHeight="54.0" prefWidth="209.0" ripplerFill="WHITE"
+                 style="-fx-background-color: #158c56;" text="Set Hotkey" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </JFXButton>
-      <JFXButton id="pickLocationButton" fx:id="helpButton" buttonType="RAISED" layoutX="231.0" layoutY="315.0" prefHeight="54.0" prefWidth="209.0" ripplerFill="WHITE" style="-fx-background-color: #158c56;" text="Help" textFill="WHITE">
+      <JFXButton id="pickLocationButton" fx:id="helpButton" buttonType="RAISED" layoutX="231.0" layoutY="315.0"
+                 onAction="#onHelpButtonAction" prefHeight="54.0" prefWidth="209.0" ripplerFill="WHITE"
+                 style="-fx-background-color: #158c56;" text="Help" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
