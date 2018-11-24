@@ -1,12 +1,17 @@
 package main;
 
 import com.jfoenix.controls.JFXTabPane;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Tab;
-import jdk.nashorn.internal.objects.Global;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.jnativehook.GlobalScreen;
@@ -16,32 +21,45 @@ import org.jnativehook.keyboard.NativeKeyListener;
 import tabs.ClickerTabController;
 import tabs.ScripterTabController;
 
+import java.awt.*;
 import java.util.logging.LogManager;
 
-public class MainController implements NativeKeyListener {
+import static tabs.ClickerTabController.*;
+
+public class MainController extends Application implements NativeKeyListener {
 
     private final static Logger LOG = Logger.getLogger(MainController.class);
 
+    private static final String CLICKER_TAB = "clickerTab";
+    private static final String SCRIPTER_TAB = "scripterTab";
+    private static String selectedTabId;
+
+    public void start(Stage primaryStage) throws Exception {
+        LOG.debug("Application initiated.");
+
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("MainWindow.fxml"));
+        primaryStage.setTitle("Idle Automation");
+        primaryStage.setScene(new Scene(root, 450, 420));
+        primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
     // Inject tab content.
     @FXML
     private Tab clickerTab;
     // Inject controller
     @FXML
     private ClickerTabController clickerTabController;
-
     // Inject tab content.
     @FXML
     private Tab scripterTab;
     // Inject controller
     @FXML
     private ScripterTabController scripterTabController;
-
     @FXML
     private JFXTabPane tabPane;
-
-    private static final String CLICKER_TAB = "clickerTab";
-    private static final String SCRIPTER_TAB = "scripterTab";
-    private static String selectedTabId;
 
     public void initialize() {
 
@@ -58,6 +76,17 @@ public class MainController implements NativeKeyListener {
                 }
         );
 
+        // Set logging defaults of JNativeHook
+        // Clear previous logging configurations
+        LogManager.getLogManager().reset();
+
+        // Get the logger for "org.jnativehook" and set the level to off.
+        Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
+        logger.setLevel(Level.WARN);
+
+        //Set the event dispatcher for thread safety
+        GlobalScreen.setEventDispatcher(new JavaFxDispatchService());
+
         //register native hook for application
         try {
             GlobalScreen.registerNativeHook();
@@ -67,25 +96,23 @@ public class MainController implements NativeKeyListener {
             System.exit(1);
         }
 
-        GlobalScreen.addNativeKeyListener(new MainController());
-
-        // Set logging defaults of JNativeHook
-        // Clear previous logging configurations
-        LogManager.getLogManager().reset();
-
-        // Get the logger for "org.jnativehook" and set the level to off.
-        Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
-        logger.setLevel(Level.WARN);
+        GlobalScreen.addNativeKeyListener(this);
     }
 
-    //redirects native key presses to appopriate controllers
+    //redirects native key presses to appropriate controllers
     @Override
     public void nativeKeyPressed(NativeKeyEvent e) {
 
+        //Convert from NativeKeyEvent to Javafx KeyCode
+        KeyEvent keyEvent = new JavaFXKeyAdapter().getJavaFXKeyEvent(e, KeyEvent.KEY_PRESSED);
+        KeyCode keyCode = keyEvent.getCode();
+
+        LOG.debug("Pressed key: " + keyCode.getName());
+
         if (CLICKER_TAB.equals(selectedTabId)) {
-            ClickerTabController.keyPressed(NativeKeyEvent.getKeyText(e.getKeyCode()));
+            ClickerTabController.keyPressed(keyCode);
         } else if (SCRIPTER_TAB.equals(selectedTabId)) {
-            ScripterTabController.keyPressed(e.getKeyCode());
+            ScripterTabController.keyPressed(keyCode);
         }
     }
 
@@ -96,4 +123,19 @@ public class MainController implements NativeKeyListener {
     @Override
     public void nativeKeyReleased(NativeKeyEvent e) {
     }
+
+    public void stop() throws Exception {
+
+        LOG.debug("Unregistering Native Hook");
+
+        //unregister Native Hook
+        try {
+            GlobalScreen.unregisterNativeHook();
+        } catch (NativeHookException e1) {
+            e1.printStackTrace();
+        }
+
+        LOG.debug("Closing Application");
+    }
+
 }

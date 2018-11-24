@@ -14,10 +14,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import main.JavaFXKeyAdapter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.jnativehook.keyboard.NativeKeyEvent;
 
+import java.awt.*;
 import java.util.concurrent.TimeUnit;
 
 public class ClickerTabController {
@@ -73,7 +75,7 @@ public class ClickerTabController {
     @FXML
     private JFXComboBox mouseButtonComboBox;
 
-    private KeyCode startHotKey;
+    private static KeyCode startHotKey;
     private Long xScreen;
     private Long yScreen;
 
@@ -96,7 +98,7 @@ public class ClickerTabController {
     @FXML
     private boolean onSetHotkeyKeyPressed(KeyEvent event) {
 
-        LOG.debug("onSetHotKeyPressed: " + event.getCode());
+        LOG.debug("Start Hotkey set to: " + event.getCode());
 
         setHotkeyButton.getParent().requestFocus();
 
@@ -106,8 +108,7 @@ public class ClickerTabController {
     //set startHotKey and update Start and Stop Buttons texts
     private boolean setStartHotkey(KeyCode keyCode) {
 
-        this.startHotKey = keyCode;
-
+        startHotKey = keyCode;
         startButton.setText("Start (" + startHotKey.getName() + ")");
         stopButton.setText("Stop (" + startHotKey.getName() + ")");
 
@@ -215,7 +216,14 @@ public class ClickerTabController {
         });
     }
 
-    public static void keyPressed(String keyCode) {
-        LOG.debug("ClickerTab Key Pressed: " + keyCode);
+    public static void keyPressed(KeyCode keyCode) {
+
+        LOG.debug("HotKey: " + startHotKey.getName());
+        LOG.debug("Equals condition: " + (keyCode == startHotKey));
+
+        if (keyCode == startHotKey) {
+
+        }
+
     }
 }
