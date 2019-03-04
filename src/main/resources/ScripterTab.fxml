@@ -5,6 +5,6 @@
 <AnchorPane prefHeight="380.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8.0.121"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="tabs.ScripterTabController">
     <children>
-        <Button fx:id="endPoint" layoutX="24.0" layoutY="27.0" mnemonicParsing="false" text="endPoint"/>
+        <Button fx:id="endPoint" layoutX="24.0" layoutY="27.0" mnemonicParsing="false" text="Scripter End Point"/>
     </children>
 </AnchorPane>

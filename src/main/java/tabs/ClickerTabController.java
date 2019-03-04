@@ -14,68 +14,51 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import main.JavaFXKeyAdapter;
+import main.Robot;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import org.jnativehook.keyboard.NativeKeyEvent;
 
 import java.awt.*;
+import java.awt.event.InputEvent;
 import java.util.concurrent.TimeUnit;
 
 public class ClickerTabController {
 
 
     private final static Logger LOG = Logger.getLogger(ClickerTabController.class);
-
+    private static KeyCode startHotKey;
     @FXML
     private TextField hoursTextField;
-
     @FXML
     private TextField minutesTextField;
-
     @FXML
     private TextField secondsTextField;
-
     @FXML
     private TextField millisecondsTextField;
-
     @FXML
     private JFXRadioButton repeatRadioButton;
-
     @FXML
     private TextField repeatTextField;
-
     @FXML
     private JFXRadioButton repeatUntilStoppedRadioButton;
-
     @FXML
     private JFXRadioButton currentLocationRadioButton;
-
     @FXML
     private JFXRadioButton pickLocationRadioButton;
-
     @FXML
     private TextField xTextField;
-
     @FXML
     private TextField yTextField;
-
     @FXML
     private JFXButton startButton;
-
     @FXML
     private JFXButton stopButton;
-
     @FXML
     private JFXButton setHotkeyButton;
-
     @FXML
     private JFXButton helpButton;
-
     @FXML
     private JFXComboBox mouseButtonComboBox;
-
-    private static KeyCode startHotKey;
     private Long xScreen;
     private Long yScreen;
 
@@ -93,6 +76,13 @@ public class ClickerTabController {
         //define character limit for textfields
         limitTextfields();
 
+    }
+
+    public void keyPressed(KeyCode keyCode) {
+
+        if (keyCode == startHotKey) {
+
+        }
     }
 
     @FXML
@@ -117,7 +107,7 @@ public class ClickerTabController {
 
     //calculate Click Interval in milliseconds
     @FXML
-    private long getClickIntervalMillis() {
+    private int getClickIntervalMillis() {
 
         long hours = 0;
         long minutes = 0;
@@ -141,14 +131,43 @@ public class ClickerTabController {
         LOG.debug("Milliseconds: " + milliseconds);
         LOG.debug("Total: " + (hours + minutes + seconds + milliseconds));
 
-        return hours + minutes + seconds + milliseconds;
+        return Math.toIntExact(hours + minutes + seconds + milliseconds);
     }
 
     @FXML
-    public void onPlay(Event e) {
-        //PLACEHOLDER
-        System.out.println(getClickIntervalMillis());
-        System.out.println(mouseButtonComboBox.getValue());
+    private void onPlay(Event e) {
+
+        try {
+            Robot robot = new Robot(getClickIntervalMillis(), getMouseButtonValue(), getClickRepeatValue(), , , );
+
+            Thread robotThread = new Thread(robot);
+            robotThread.start();
+
+        } catch (AWTException ex) {
+            System.out.println("Error: Unable to start robot thread!");
+        }
+
+    }
+
+    private int getMouseButtonValue() {
+        String mouseButton = mouseButtonComboBox.getValue().toString();
+
+        if (mouseButton.equals("Right")) {
+            return InputEvent.BUTTON3_MASK;
+        } else if (mouseButton.equals("Middle")) {
+            return InputEvent.BUTTON2_MASK;
+        } else {
+            return InputEvent.BUTTON1_MASK;
+        }
+    }
+
+    //returns clickRepeatValue according to radio button
+    private int getClickRepeatValue() {
+        if (repeatUntilStoppedRadioButton.isSelected() || repeatTextField.getText().isEmpty()) {
+            return 0;
+        }
+
+        return Integer.parseInt(repeatTextField.getText());
     }
 
     //Defines custom Click Position
@@ -216,14 +235,4 @@ public class ClickerTabController {
         });
     }
 
-    public static void keyPressed(KeyCode keyCode) {
-
-        LOG.debug("HotKey: " + startHotKey.getName());
-        LOG.debug("Equals condition: " + (keyCode == startHotKey));
-
-        if (keyCode == startHotKey) {
-
-        }
-
-    }
 }

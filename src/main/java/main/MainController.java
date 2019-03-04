@@ -21,14 +21,26 @@ import org.jnativehook.keyboard.NativeKeyListener;
 import tabs.ClickerTabController;
 import tabs.ScripterTabController;
 
-import java.awt.*;
 import java.util.logging.LogManager;
-
-import static tabs.ClickerTabController.*;
 
 public class MainController extends Application implements NativeKeyListener {
 
     private final static Logger LOG = Logger.getLogger(MainController.class);
+
+    // Inject tab content.
+    @FXML
+    private Tab clickerTabTitle;
+    // Inject controller
+    @FXML
+    private ClickerTabController clickerTabController;
+    // Inject tab content.
+    @FXML
+    private Tab scripterTabTitle;
+    // Inject controller
+    @FXML
+    private ScripterTabController scripterTabController;
+    @FXML
+    private JFXTabPane tabPane;
 
     private static final String CLICKER_TAB = "clickerTab";
     private static final String SCRIPTER_TAB = "scripterTab";
@@ -46,20 +58,6 @@ public class MainController extends Application implements NativeKeyListener {
     public static void main(String[] args) {
         launch(args);
     }
-    // Inject tab content.
-    @FXML
-    private Tab clickerTab;
-    // Inject controller
-    @FXML
-    private ClickerTabController clickerTabController;
-    // Inject tab content.
-    @FXML
-    private Tab scripterTab;
-    // Inject controller
-    @FXML
-    private ScripterTabController scripterTabController;
-    @FXML
-    private JFXTabPane tabPane;
 
     public void initialize() {
 
@@ -110,9 +108,9 @@ public class MainController extends Application implements NativeKeyListener {
         LOG.debug("Pressed key: " + keyCode.getName());
 
         if (CLICKER_TAB.equals(selectedTabId)) {
-            ClickerTabController.keyPressed(keyCode);
+            clickerTabController.keyPressed(keyCode);
         } else if (SCRIPTER_TAB.equals(selectedTabId)) {
-            ScripterTabController.keyPressed(keyCode);
+            scripterTabController.keyPressed(keyCode);
         }
     }
 
