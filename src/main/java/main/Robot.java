@@ -17,23 +17,40 @@ public class Robot extends java.awt.Robot implements Runnable {
         super();
 
         this.msClickInterval = msClickInterval;
-        setAutoDelay(msClickInterval);
-
         this.mouseButton = mouseButton;
         this.clickRepeatValue = clickRepeatValue;
         this.currentLocation = currentLocation;
         this.xPos = xPos;
         this.yPos = yPos;
-    }
 
-    @Override
-    public void run() {
-        if (!currentLocation) {
-            mouseMove(xPos, yPos);
-        }
+        stopLooping = false;
     }
 
     public static void stopLooping() {
         stopLooping = true;
+    }
+
+    @Override
+    public void run() {
+
+        //moves to set location if defined
+        if (!currentLocation) {
+            mouseMove(xPos, yPos);
+        }
+
+        if (clickRepeatValue != 0) {
+            for (int i = 0; i < clickRepeatValue && !stopLooping; i++) {
+                mousePress(mouseButton);
+                mouseRelease(mouseButton);
+                delay(msClickInterval);
+            }
+        } else {
+            do {
+                mousePress(mouseButton);
+                mouseRelease(mouseButton);
+                delay(msClickInterval);
+            } while (!stopLooping);
+
+        }
     }
 }

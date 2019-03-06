@@ -1,153 +1,178 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXComboBox?>
-<?import com.jfoenix.controls.JFXRadioButton?>
-<?import java.lang.String?>
+<?import com.jfoenix.controls.*?>
 <?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.Group?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
-
+<?import javafx.scene.text.*?>
+<?import java.lang.String?>
 <AnchorPane prefHeight="380.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8.0.121"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="tabs.ClickerTabController">
-   <children>
-      <Rectangle id="clickIntervalRectangle" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="62.0" layoutX="9.0" layoutY="12.0" opacity="0.45" stroke="#148d58" strokeType="OUTSIDE" width="430.0" />
-      <FlowPane id="clickIntervalFlowPane" fx:id="clickIntervalFlowPane" hgap="20.0" layoutX="28.0" layoutY="29.0">
-         <children>
-            <Group id="hoursGroup" fx:id="hoursGroup">
-               <children>
-                  <Label layoutX="20.0" layoutY="3.0" text="hours">
-                     <padding>
-                        <Insets left="12.0" />
-                     </padding></Label>
-                  <TextField id="hoursTextField" fx:id="hoursTextField" alignment="CENTER" prefHeight="25.0" prefWidth="28.0" />
-               </children>
-            </Group>
-            <Group id="minutesGroup" fx:id="minutesGroup">
-               <children>
-                  <Label layoutX="20.0" layoutY="3.0" text="minutes">
-                     <padding>
-                        <Insets left="12.0" />
-                     </padding></Label>
-                  <TextField id="minutesTextField" fx:id="minutesTextField" alignment="CENTER" prefHeight="25.0" prefWidth="28.0" />
-               </children>
-            </Group>
-            <Group id="secondsGroup" fx:id="secondsGroup">
-               <children>
-                  <Label layoutX="20.0" layoutY="3.0" text="seconds">
-                     <padding>
-                        <Insets left="12.0" />
-                     </padding></Label>
-                  <TextField id="secondsTextField" fx:id="secondsTextField" alignment="CENTER" prefHeight="25.0" prefWidth="28.0" />
-               </children>
-            </Group>
-            <Group id="millisecondsGroup" fx:id="millisecondsGroup">
-               <children>
-                  <Label layoutX="27.0" layoutY="3.0" text="milliseconds">
-                     <padding>
-                        <Insets left="18.0" />
-                     </padding></Label>
-                  <TextField id="millisecondsTextField" fx:id="millisecondsTextField" alignment="CENTER" prefHeight="25.0" prefWidth="38.0" />
-               </children>
-            </Group>
-         </children>
-      </FlowPane>
-      <Label layoutX="17.0" layoutY="2.0" style="-fx-background-color: F4F4F4;" text="Click Interval" textFill="#148d58">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font></Label>
-       <Rectangle id="clickOptionsRectangle" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="78.0" layoutX="9.0" layoutY="86.0" opacity="0.45" stroke="#148d58" strokeType="OUTSIDE" width="207.0" />
-      <Label layoutX="17.0" layoutY="78.0" style="-fx-background-color: F4F4F4;" text="Click Options" textFill="#148d58">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="24.0" layoutY="117.0" text="Mouse Button" />
-      <JFXComboBox fx:id="mouseButtonComboBox" focusColor="#00bcd5" layoutX="111.0" layoutY="113.0" prefHeight="25.0"
-                   prefWidth="85.0">
-           <items>
-               <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Left"/>
-                  <String fx:value="Middle"/>
-                  <String fx:value="Right"/>
-               </FXCollections>
-           </items>
-           <value>
-              <String fx:value="Left"/>
-           </value>
-       </JFXComboBox>
-      <Rectangle id="clickRepeatRectangle" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="78.0" layoutX="233.0" layoutY="86.0" opacity="0.45" stroke="#148d58" strokeType="OUTSIDE" width="207.0" />
-      <Label layoutX="252.0" layoutY="78.0" style="-fx-background-color: F4F4F4;" text="Click Repeat" textFill="#148d58">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <JFXRadioButton id="repeatRadioButton" fx:id="repeatRadioButton" layoutX="252.0" layoutY="103.0" text="Repeat">
-         <toggleGroup>
-            <ToggleGroup fx:id="clickRepeatToggleGroup" />
-         </toggleGroup>
-      </JFXRadioButton>
-      <JFXRadioButton id="repeatUntilStoppedRadioButton" fx:id="repeatUntilStoppedRadioButton" layoutX="252.0" layoutY="131.0" selected="true" text="Repeat until stopped" toggleGroup="$clickRepeatToggleGroup" />
-      <Rectangle id="clickPositionRectangle" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="62.0" layoutX="9.0" layoutY="178.0" opacity="0.45" stroke="#148d58" strokeType="OUTSIDE" width="430.0" />
-      <Label layoutX="17.0" layoutY="168.0" style="-fx-background-color: F4F4F4;" text="Click Position" textFill="#148d58">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <JFXRadioButton id="currentLocationRadioButton" fx:id="currentLocationRadioButton" layoutX="24.0" layoutY="201.0" selected="true" text="Current Location">
-         <toggleGroup>
-            <ToggleGroup fx:id="clickPositionToggleGroup" />
-         </toggleGroup></JFXRadioButton>
-      <JFXRadioButton id="pickLocationRadioButton" fx:id="pickLocationRadioButton" layoutX="158.0" layoutY="201.0" toggleGroup="$clickPositionToggleGroup" />
-      <JFXButton id="pickLocationButton" fx:id="pickLocationButton" buttonType="RAISED" layoutX="185.0" layoutY="191.0"
-                 onMouseReleased="#onPickLocationMouseRelease" prefHeight="36.0" prefWidth="93.0" ripplerFill="#158c56"
-                 style="-fx-background-color: F4F4F4;" text="Pick Location"/>
-      <Label layoutX="290.0" layoutY="199.0" style="-fx-background-color: F4F4F4;" text="X" textFill="#148d58">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <TextField id="xTextField" layoutX="307.0" layoutY="197.0" prefHeight="25.0" prefWidth="42.0" fx:id="xTextField" />
-      <Label layoutX="360.0" layoutY="199.0" style="-fx-background-color: F4F4F4;" text="Y" textFill="#148d58">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <TextField id="yTextField" fx:id="yTextField" layoutX="377.0" layoutY="197.0" prefHeight="25.0" prefWidth="42.0" />
-      <JFXButton id="startButton" fx:id="startButton" buttonType="RAISED" layoutX="8.0" layoutY="250.0"
-                 onAction="#onPlay" prefHeight="54.0" prefWidth="209.0" ripplerFill="WHITE"
-                 style="-fx-background-color: #158c56;" text="Start" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </JFXButton>
-      <JFXButton id="stopButton" fx:id="stopButton" buttonType="RAISED" layoutX="231.0" layoutY="250.0" prefHeight="54.0" prefWidth="209.0" ripplerFill="WHITE" style="-fx-background-color: #158c56;" text="Stop" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </JFXButton>
-      <JFXButton id="setHotkeyButton" fx:id="setHotkeyButton" buttonType="RAISED" layoutX="8.0" layoutY="315.0"
-                 onKeyPressed="#onSetHotkeyKeyPressed" prefHeight="54.0" prefWidth="209.0" ripplerFill="WHITE"
-                 style="-fx-background-color: #158c56;" text="Set Hotkey" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </JFXButton>
-      <JFXButton id="pickLocationButton" fx:id="helpButton" buttonType="RAISED" layoutX="231.0" layoutY="315.0"
-                 onAction="#onHelpButtonAction" prefHeight="54.0" prefWidth="209.0" ripplerFill="WHITE"
-                 style="-fx-background-color: #158c56;" text="Help" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </JFXButton>
-      <TextField id="repeatTextField" fx:id="repeatTextField" layoutX="321.0" layoutY="101.0" prefHeight="25.0" prefWidth="74.0" />
+    <children>
+        <Rectangle id="clickIntervalRectangle" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="62.0"
+                   layoutX="9.0" layoutY="12.0" opacity="0.45" stroke="#148d58" strokeType="OUTSIDE" width="430.0"/>
+        <FlowPane id="clickIntervalFlowPane" fx:id="clickIntervalFlowPane" hgap="20.0" layoutX="28.0" layoutY="29.0">
+            <children>
+                <Group id="hoursGroup" fx:id="hoursGroup">
+                    <children>
+                        <Label layoutX="20.0" layoutY="3.0" text="hours">
+                            <padding>
+                                <Insets left="12.0"/>
+                            </padding>
+                        </Label>
+                        <TextField id="hoursTextField" fx:id="hoursTextField" alignment="CENTER" prefHeight="25.0"
+                                   prefWidth="28.0"/>
+                    </children>
+                </Group>
+                <Group id="minutesGroup" fx:id="minutesGroup">
+                    <children>
+                        <Label layoutX="20.0" layoutY="3.0" text="minutes">
+                            <padding>
+                                <Insets left="12.0"/>
+                            </padding>
+                        </Label>
+                        <TextField id="minutesTextField" fx:id="minutesTextField" alignment="CENTER" prefHeight="25.0"
+                                   prefWidth="28.0"/>
+                    </children>
+                </Group>
+                <Group id="secondsGroup" fx:id="secondsGroup">
+                    <children>
+                        <Label layoutX="20.0" layoutY="3.0" text="seconds">
+                            <padding>
+                                <Insets left="12.0"/>
+                            </padding>
+                        </Label>
+                        <TextField id="secondsTextField" fx:id="secondsTextField" alignment="CENTER" prefHeight="25.0"
+                                   prefWidth="28.0"/>
+                    </children>
+                </Group>
+                <Group id="millisecondsGroup" fx:id="millisecondsGroup">
+                    <children>
+                        <Label layoutX="27.0" layoutY="3.0" text="milliseconds">
+                            <padding>
+                                <Insets left="18.0"/>
+                            </padding>
+                        </Label>
+                        <TextField id="millisecondsTextField" fx:id="millisecondsTextField" alignment="CENTER"
+                                   prefHeight="25.0" prefWidth="38.0"/>
+                    </children>
+                </Group>
+            </children>
+        </FlowPane>
+        <Label layoutX="17.0" layoutY="2.0" style="-fx-background-color: F4F4F4;" text="Click Interval"
+               textFill="#148d58">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+        </Label>
+        <Rectangle id="clickOptionsRectangle" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="78.0"
+                   layoutX="9.0" layoutY="86.0" opacity="0.45" stroke="#148d58" strokeType="OUTSIDE" width="207.0"/>
+        <Label layoutX="17.0" layoutY="78.0" style="-fx-background-color: F4F4F4;" text="Click Options"
+               textFill="#148d58">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+        </Label>
+        <Label layoutX="24.0" layoutY="117.0" text="Mouse Button"/>
+        <JFXComboBox fx:id="mouseButtonComboBox" focusColor="#00bcd5" layoutX="111.0" layoutY="113.0" prefHeight="25.0"
+                     prefWidth="85.0">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Left"/>
+                    <String fx:value="Middle"/>
+                    <String fx:value="Right"/>
+                </FXCollections>
+            </items>
+            <value>
+                <String fx:value="Left"/>
+            </value>
+        </JFXComboBox>
+        <Rectangle id="clickRepeatRectangle" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="78.0"
+                   layoutX="233.0" layoutY="86.0" opacity="0.45" stroke="#148d58" strokeType="OUTSIDE" width="207.0"/>
+        <Label layoutX="252.0" layoutY="78.0" style="-fx-background-color: F4F4F4;" text="Click Repeat"
+               textFill="#148d58">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+        </Label>
+        <JFXRadioButton id="repeatRadioButton" fx:id="repeatRadioButton" layoutX="252.0" layoutY="103.0" text="Repeat">
+            <toggleGroup>
+                <ToggleGroup fx:id="clickRepeatToggleGroup"/>
+            </toggleGroup>
+        </JFXRadioButton>
+        <JFXRadioButton id="repeatUntilStoppedRadioButton" fx:id="repeatUntilStoppedRadioButton" layoutX="252.0"
+                        layoutY="131.0" selected="true" text="Repeat until stopped"
+                        toggleGroup="$clickRepeatToggleGroup"/>
+        <Rectangle id="clickPositionRectangle" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="62.0"
+                   layoutX="9.0" layoutY="178.0" opacity="0.45" stroke="#148d58" strokeType="OUTSIDE" width="430.0"/>
+        <Label layoutX="17.0" layoutY="168.0" style="-fx-background-color: F4F4F4;" text="Click Position"
+               textFill="#148d58">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+        </Label>
+        <JFXRadioButton id="currentLocationRadioButton" fx:id="currentLocationRadioButton" layoutX="24.0"
+                        layoutY="201.0" selected="true" text="Current Location">
+            <toggleGroup>
+                <ToggleGroup fx:id="clickPositionToggleGroup"/>
+            </toggleGroup>
+        </JFXRadioButton>
+        <JFXRadioButton id="pickLocationRadioButton" fx:id="pickLocationRadioButton" layoutX="158.0" layoutY="201.0"
+                        toggleGroup="$clickPositionToggleGroup"/>
+        <JFXButton id="pickLocationButton" fx:id="pickLocationButton" buttonType="RAISED" layoutX="185.0"
+                   layoutY="191.0"
+                   onMouseReleased="#onPickLocationMouseRelease" prefHeight="36.0" prefWidth="93.0"
+                   ripplerFill="#158c56"
+                   style="-fx-background-color: F4F4F4;" text="Pick Location"/>
+        <Label layoutX="290.0" layoutY="199.0" style="-fx-background-color: F4F4F4;" text="X" textFill="#148d58">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+        </Label>
+        <TextField id="xTextField" layoutX="307.0" layoutY="197.0" prefHeight="25.0" prefWidth="42.0"
+                   fx:id="xTextField"/>
+        <Label layoutX="360.0" layoutY="199.0" style="-fx-background-color: F4F4F4;" text="Y" textFill="#148d58">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+        </Label>
+        <TextField id="yTextField" fx:id="yTextField" layoutX="377.0" layoutY="197.0" prefHeight="25.0"
+                   prefWidth="42.0"/>
+        <JFXButton id="startButton" fx:id="startButton" buttonType="RAISED" layoutX="8.0" layoutY="250.0"
+                   onAction="#onPlay" prefHeight="54.0" prefWidth="209.0" ripplerFill="WHITE"
+                   style="-fx-background-color: #158c56;" text="Start" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="18.0"/>
+            </font>
+        </JFXButton>
+        <JFXButton id="stopButton" fx:id="stopButton" buttonType="RAISED" layoutX="231.0" layoutY="250.0"
+                   onAction="#onStop" prefHeight="54.0" prefWidth="209.0" ripplerFill="WHITE"
+                   style="-fx-background-color: #158c56;"
+                   text="Stop" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="18.0"/>
+            </font>
+        </JFXButton>
+        <JFXButton id="setHotkeyButton" fx:id="setHotkeyButton" buttonType="RAISED" layoutX="8.0" layoutY="315.0"
+                   onKeyPressed="#onSetHotkeyKeyPressed" prefHeight="54.0" prefWidth="209.0" ripplerFill="WHITE"
+                   style="-fx-background-color: #158c56;" text="Set Hotkey" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="18.0"/>
+            </font>
+        </JFXButton>
+        <JFXButton id="pickLocationButton" fx:id="helpButton" buttonType="RAISED" layoutX="231.0" layoutY="315.0"
+                   onAction="#onHelpButtonAction" prefHeight="54.0" prefWidth="209.0" ripplerFill="WHITE"
+                   style="-fx-background-color: #158c56;" text="Help" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="18.0"/>
+            </font>
+        </JFXButton>
+        <TextField id="repeatTextField" fx:id="repeatTextField" layoutX="321.0" layoutY="101.0" prefHeight="25.0"
+                   prefWidth="74.0"/>
 
-   </children>
+    </children>
 </AnchorPane>

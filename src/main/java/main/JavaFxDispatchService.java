@@ -8,7 +8,7 @@ import java.util.concurrent.AbstractExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class JavaFxDispatchService extends AbstractExecutorService {
-    private boolean running = false;
+    private boolean running;
 
     public JavaFxDispatchService() {
         running = true;
@@ -20,7 +20,7 @@ public class JavaFxDispatchService extends AbstractExecutorService {
 
     public List<Runnable> shutdownNow() {
         running = false;
-        return new ArrayList<Runnable>(0);
+        return new ArrayList<>(0);
     }
 
     public boolean isShutdown() {
@@ -31,7 +31,7 @@ public class JavaFxDispatchService extends AbstractExecutorService {
         return !running;
     }
 
-    public boolean awaitTermination(long timeout, TimeUnit unit) throws InterruptedException {
+    public boolean awaitTermination(long timeout, TimeUnit unit) {
         return true;
     }
 

@@ -3,7 +3,6 @@ package tabs;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
@@ -24,9 +23,11 @@ import java.util.concurrent.TimeUnit;
 
 public class ClickerTabController {
 
-
     private final static Logger LOG = Logger.getLogger(ClickerTabController.class);
+
     private static KeyCode startHotKey;
+    private Thread robotThread;
+
     @FXML
     private TextField hoursTextField;
     @FXML
@@ -36,15 +37,11 @@ public class ClickerTabController {
     @FXML
     private TextField millisecondsTextField;
     @FXML
-    private JFXRadioButton repeatRadioButton;
-    @FXML
     private TextField repeatTextField;
     @FXML
     private JFXRadioButton repeatUntilStoppedRadioButton;
     @FXML
     private JFXRadioButton currentLocationRadioButton;
-    @FXML
-    private JFXRadioButton pickLocationRadioButton;
     @FXML
     private TextField xTextField;
     @FXML
@@ -56,12 +53,7 @@ public class ClickerTabController {
     @FXML
     private JFXButton setHotkeyButton;
     @FXML
-    private JFXButton helpButton;
-    @FXML
     private JFXComboBox mouseButtonComboBox;
-    private Long xScreen;
-    private Long yScreen;
-
 
     @FXML
     public void initialize() {
@@ -80,9 +72,21 @@ public class ClickerTabController {
 
     public void keyPressed(KeyCode keyCode) {
 
+        //start-stop clicker
         if (keyCode == startHotKey) {
 
+            if (robotThread != null && robotThread.isAlive()) {
+                Robot.stopLooping();
+            } else {
+                initiateRobot();
+            }
         }
+
+        //always terminate clicker on escape
+        if (keyCode == KeyCode.ESCAPE) {
+            Robot.stopLooping();
+        }
+
     }
 
     @FXML
@@ -110,8 +114,9 @@ public class ClickerTabController {
     private int getClickIntervalMillis() {
 
         long hours = 0;
-        long minutes = 0;
         long seconds = 0;
+        long minutes = 0;
+        long milliseconds = 0;
 
         if (!StringUtils.isEmpty(hoursTextField.getText()))
             hours = TimeUnit.SECONDS.toMillis(TimeUnit.HOURS.toSeconds(Long.valueOf(hoursTextField.getText())));
@@ -122,42 +127,59 @@ public class ClickerTabController {
         if (!StringUtils.isEmpty(secondsTextField.getText()))
             seconds = TimeUnit.SECONDS.toMillis(Long.valueOf(secondsTextField.getText()));
 
-        //no need to check if it is empty, it has a default value
-        long milliseconds = Integer.valueOf(millisecondsTextField.getText());
+        if (!StringUtils.isEmpty(millisecondsTextField.getText()))
+            milliseconds = Integer.valueOf(millisecondsTextField.getText());
 
-        LOG.debug("Hours in milliseconds: " + hours);
-        LOG.debug("Minutes in milliseconds: " + minutes);
-        LOG.debug("Seconds in milliseconds: " + seconds);
-        LOG.debug("Milliseconds: " + milliseconds);
-        LOG.debug("Total: " + (hours + minutes + seconds + milliseconds));
+        LOG.debug("Total delay: " + (hours + minutes + seconds + milliseconds));
 
-        return Math.toIntExact(hours + minutes + seconds + milliseconds);
+        int total = Math.toIntExact(hours + minutes + seconds + milliseconds);
+
+        //minimum event delay
+        return total <= 10 ? 10 : total;
     }
 
-    @FXML
-    private void onPlay(Event e) {
+    private void initiateRobot() {
 
+        LOG.debug("Clicker Robot Initialized");
         try {
-            Robot robot = new Robot(getClickIntervalMillis(), getMouseButtonValue(), getClickRepeatValue(), , , );
+            Robot robot = new Robot(getClickIntervalMillis(), getMouseButtonValue(), getClickRepeatValue(),
+                                    currentLocationRadioButton.isSelected(), getXTextFieldValue(),
+                                    getYTextFieldValue());
 
-            Thread robotThread = new Thread(robot);
+            robotThread = new Thread(robot);
             robotThread.start();
 
         } catch (AWTException ex) {
             System.out.println("Error: Unable to start robot thread!");
         }
+    }
 
+    private int getXTextFieldValue() {
+        if (xTextField.getText().isEmpty()) {
+            return 0;
+        }
+
+        return Integer.parseInt(xTextField.getText());
+    }
+
+    private int getYTextFieldValue() {
+        if (yTextField.getText().isEmpty()) {
+            return 0;
+        }
+
+        return Integer.parseInt(yTextField.getText());
     }
 
     private int getMouseButtonValue() {
         String mouseButton = mouseButtonComboBox.getValue().toString();
 
-        if (mouseButton.equals("Right")) {
-            return InputEvent.BUTTON3_MASK;
-        } else if (mouseButton.equals("Middle")) {
-            return InputEvent.BUTTON2_MASK;
-        } else {
-            return InputEvent.BUTTON1_MASK;
+        switch (mouseButton) {
+            case "Right":
+                return InputEvent.BUTTON3_MASK;
+            case "Middle":
+                return InputEvent.BUTTON2_MASK;
+            default:
+                return InputEvent.BUTTON1_MASK;
         }
     }
 
@@ -174,8 +196,8 @@ public class ClickerTabController {
     @FXML
     private void onPickLocationMouseRelease(MouseEvent event) {
 
-        xScreen = Math.round(event.getScreenX());
-        yScreen = Math.round(event.getScreenY());
+        Long xScreen = Math.round(event.getScreenX());
+        Long yScreen = Math.round(event.getScreenY());
 
         xTextField.setText(xScreen.toString());
         yTextField.setText(yScreen.toString());
@@ -235,4 +257,13 @@ public class ClickerTabController {
         });
     }
 
+    @FXML
+    private void onPlay() {
+        initiateRobot();
+    }
+
+    @FXML
+    public void onStop() {
+        Robot.stopLooping();
+    }
 }
